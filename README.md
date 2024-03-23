@@ -2,6 +2,22 @@
 
 ## TP2 - Implémentation du processus de qualité
 
+Le TP2 vise à développer et intégrer un processus de gestion de la qualité au sein d'un environnement DevOps, appliqué  
+à un projet de service simple, tel qu'une API REST, GraphQL or gRPC. Cette activité requiert l'implantation et  
+l'application concrète d'un ensemble de pratiques clés en matière de qualité logicielle, notamment la mise en place  
+d'un système de suivi des tickets, l'adoption de stratégies de révision de code, l'implémentation de l'intégration  
+continue (CI) et du déploiement continu (CD), ainsi que l'instauration de mécanismes d'observabilité pour le  
+monitoring du service.
+
+L'évaluation de l'efficacité du processus de qualité instauré sera réalisée à travers l'application des critères définis  
+par le modèle ISO 25010 ou les indicateurs DORA, selon votre choix. Ces standards serviront de référence pour mesurer  
+la performance et l'amélioration continue du processus de qualité mis en œuvre.
+
+Vous avez la liberté de choisir un projet  libre existant qui implémente déjà un service web ou, si vous préférez,  
+de développer de zéro le service nécessaire à cette activité. L'objectif principal est de vous familiariser avec les  
+meilleures pratiques de gestion de la qualité dans le cadre du développement logiciel et de comprendre l'impact de ces  
+pratiques sur la livraison d'un service fiable et performant.
+
 Ce TP a pour but de vous initier à la conception, l'intégration, et l'évaluation d'un processus de qualité au sein  
 d'un environnement DevOps, appliqué à un service simple, comme une API REST, GrapQL ou gRPC. En tant que consultants  
 en génie logiciel spécialisés dans la qualité, vous serez chargés de développer et d'implémenter un ensemble de  
