@@ -170,3 +170,7 @@ cython_debug/
 **/tsconfig.tsbuildinfo
 **/!jest.config.js
 **/!setup.js
+**/*.zip
+pulumi/node_modules
+python
+lambda_layer
