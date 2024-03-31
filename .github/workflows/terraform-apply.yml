@@ -28,7 +28,7 @@ jobs:
           docker run -v ${PWD}:/var/task -w /var/task amazonlinux /bin/bash -c "yum install -y python3-pip && pip3 install --platform manylinux2014_x86_64 --target lambda_layer/python --python-version 3.12 --only-binary=:all: -r requirements.txt"
 
       - name: Copy src and layer
-        run: cp ../src src && cp ../layer_layer layer
+        run: cp -a src terraform/src && cp -a layer_layer terraform/layer_layer
 
       - name: Upload Configuration
         uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
