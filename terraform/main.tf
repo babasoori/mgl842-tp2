@@ -19,11 +19,6 @@ resource "aws_iam_role" "iam_for_lambda" {
 }
 
 data "aws_iam_policy_document" "lambda_logs" {
-  statement {
-    effect = "Allow"
-    actions = ["logs:CreateLogGroup"]
-    resources = ["arn:aws:logs:us-east-1:${data.aws_caller_identity.current.account_id}:*"]
-  }
 
   statement {
     effect = "Allow"
@@ -54,14 +49,14 @@ resource "aws_iam_role_policy_attachment" "lambda_logs_policy_attachment" {
 
 data "archive_file" "lambda" {
   type        = "zip"
-  source_file = "src/pr_reviewer.py"
+  source_file = "../src/pr_reviewer.py"
   output_path = "src.zip"
 }
 
 
 data "archive_file" "lambda_layer" {
   type        = "zip"
-  source_dir = "lambda_layer"
+  source_dir = "../lambda_layer"
   output_path = "lambda_layer.zip"
 }
 
