@@ -119,4 +119,3 @@ def lambda_handler(event, context):
     logging.info({"response": res})
 
     return res
-

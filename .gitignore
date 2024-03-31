@@ -174,3 +174,12 @@ cython_debug/
 pulumi/node_modules
 python
 lambda_layer
+.DS_Store
+event.json
+pulumi
+**/.terraform.lock.hcl
+**/terraform.tfstate
+**/terraform.tfstate.backup
+terraform/src
+terraform/lambda_layer
+temp
