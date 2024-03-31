@@ -49,14 +49,14 @@ resource "aws_iam_role_policy_attachment" "lambda_logs_policy_attachment" {
 
 data "archive_file" "lambda" {
   type        = "zip"
-  source_file = "${path.module}/../src/pr_reviewer.py"
+  source_file = "src/pr_reviewer.py"
   output_path = "src.zip"
 }
 
 
 data "archive_file" "lambda_layer" {
   type        = "zip"
-  source_dir = "${path.module}/../lambda_layer"
+  source_dir = "lambda_layer"
   output_path = "lambda_layer.zip"
 }
 
