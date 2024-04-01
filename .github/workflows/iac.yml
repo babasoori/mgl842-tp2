@@ -1,4 +1,4 @@
-name: Snyk Infrastructure as Code
+name: Snyk IaC Security Analysis
 on: push
 jobs:
   snyk:
