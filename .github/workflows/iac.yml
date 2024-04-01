@@ -1,7 +1,7 @@
 name: Snyk IaC Security Analysis
 on:
   workflow_run:
-    workflows: [ "Snyk Python Security Analysis" ]
+    workflows: ["Snyk Python Security Analysis"]
     types:
       - completed
   push:

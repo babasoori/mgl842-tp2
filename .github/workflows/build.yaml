@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Run Docker command
         run: |
@@ -25,7 +25,7 @@ jobs:
         run: cp -a src terraform/src && cp -a lambda_layer terraform/lambda_layer
 
       - name: Upload src and layer as artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: code-artifacts
           path: |
