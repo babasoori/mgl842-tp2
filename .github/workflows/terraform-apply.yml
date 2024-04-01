@@ -1,10 +1,6 @@
 name: "Terraform Apply"
 
 on:
-  workflow_run:
-    workflows: ["Snyk IaC Security Analysis"]
-    types:
-      - completed
   push:
     branches:
       - main

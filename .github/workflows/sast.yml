@@ -1,9 +1,5 @@
 name: Snyk Python Security Analysis
 on:
-  workflow_run:
-    workflows: ["SonarCloud"]
-    types:
-      - completed
   push:
     branches:
       - main
