@@ -1,5 +1,14 @@
 name: Snyk IaC Security Analysis
-on: push
+on:
+  workflow_run:
+    workflows: [ "Snyk Python Security Analysis" ]
+    types:
+      - completed
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [ opened, synchronize, reopened ]
 jobs:
   snyk:
     runs-on: ubuntu-latest

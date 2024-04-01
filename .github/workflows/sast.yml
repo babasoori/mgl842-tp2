@@ -1,5 +1,14 @@
 name: Snyk Python Security Analysis
-on: push
+on:
+  workflow_run:
+    workflows: [ "SonarCloud" ]
+    types:
+      - completed
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [ opened, synchronize, reopened ]
 jobs:
   security:
     runs-on: ubuntu-latest
