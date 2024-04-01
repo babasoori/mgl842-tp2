@@ -24,11 +24,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Download src and layer artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: code-artifacts
-          path: terraform
+      - name: Run Docker command
+        run: |
+          docker run -v ${PWD}:/var/task -w /var/task amazonlinux /bin/bash -c "yum install -y python3-pip && pip3 install --platform manylinux2014_x86_64 --target lambda_layer/python --python-version 3.12 --only-binary=:all: -r requirements.txt"
+
+      - name: Copy src and layer
+        run: cp -a src terraform/src && cp -a lambda_layer terraform/lambda_layer
 
       - name: Upload Configuration
         uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
