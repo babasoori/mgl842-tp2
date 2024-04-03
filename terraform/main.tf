@@ -29,6 +29,15 @@ data "aws_iam_policy_document" "lambda_logs" {
     ]
     resources = ["arn:aws:logs:us-east-1:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/${aws_lambda_function.lambda.function_name}:*"]
   }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "xray:PutTraceSegments",
+      "xray:PutTelemetryRecords",
+    ]
+    resources = ["*"]
+  }
 }
 
 resource "aws_cloudwatch_log_group" "log_group" {
@@ -81,4 +90,8 @@ resource "aws_lambda_function" "lambda" {
   runtime = "python3.12"
 
   layers = [aws_lambda_layer_version.lambda_layer.arn]
+
+  tracing_config {
+    mode = "Active"
+  }
 }
