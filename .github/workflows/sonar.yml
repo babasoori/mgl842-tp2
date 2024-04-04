@@ -24,9 +24,11 @@ jobs:
       - name: Test with pytest
         run: |
           pip install pytest pytest-cov
+      - name: Create coverage reports directory
+        run: mkdir -p coverage-reports
       - name: Run tests with coverage
         run: |
-          pytest tests --cov=src --cov-report=xml --cov-branch
+          pytest tests --cov=src --cov-report=xml:coverage-reports/coverage-${{ github.run_number }}.xml
         env:
           PYTHONPATH: ${{ github.workspace }}
       - name: SonarCloud Scan
