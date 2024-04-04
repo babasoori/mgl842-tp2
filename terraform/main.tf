@@ -76,7 +76,6 @@ resource "aws_lambda_layer_version" "lambda_layer" {
   compatible_runtimes = ["python3.12"]
 
   source_code_hash = data.archive_file.lambda_layer.output_base64sha256
-  timeout = 300
 }
 
 
@@ -85,6 +84,7 @@ resource "aws_lambda_function" "lambda" {
   function_name = "mgl842_lambda_function"
   role          = aws_iam_role.iam_for_lambda.arn
   handler       = "pr_reviewer.lambda_handler"
+  timeout = 300
 
   source_code_hash = data.archive_file.lambda.output_base64sha256
 
