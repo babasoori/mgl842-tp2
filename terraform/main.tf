@@ -94,4 +94,13 @@ resource "aws_lambda_function" "lambda" {
   tracing_config {
     mode = "Active"
   }
+
+  environment {
+    variables = {
+      MY_GITHUB_TOKEN = var.my_github_token
+      OPENAI_API_KEY = var.openai_api_key
+      ASSISTANT_ID = var.assistant_id
+      AUTHORIZED_REPO = var.authorized_repo
+    }
+  }
 }
