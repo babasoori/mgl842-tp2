@@ -96,7 +96,7 @@ def lambda_handler(event, context):
 
     logging.info({"queryStringParameters": event.get("queryStringParameters")})
 
-    body = ("Hello. The OpenAI PR Reviewer API is still constructions. Check back in a few days. "
+    body = ("Hello Baba Demo. The OpenAI PR Reviewer API is still constructions. Check back in a few days. "
             "Thanks for your patience!")
 
     query_string_parameters = event.get("queryStringParameters", {})
