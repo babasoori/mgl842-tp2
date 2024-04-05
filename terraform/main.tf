@@ -40,23 +40,25 @@ data "aws_iam_policy_document" "lambda_logs" {
   }
 }
 
-data "aws_iam_policy_document" "kms_policy" {
-  statement {
-    effect = "Allow"
-
-    principals {
-      type        = "AWS"
-      identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"]
-    }
-
-    actions = ["kms:*"]
-    resources = ["*"]
-  }
-}
-
 resource "aws_kms_key" "log_key" {
   description = "KMS key for cloudwatch log group"
-  policy = data.aws_iam_policy_document.kms_policy.json
+  policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Id": "key-default-1",
+  "Statement": [
+    {
+      "Sid": "Enable IAM User Permissions",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+      },
+      "Action": "kms:*",
+      "Resource": "*"
+    }
+  ]
+}
+POLICY
   enable_key_rotation = true
 }
 
