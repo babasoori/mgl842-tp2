@@ -57,6 +57,7 @@ data "aws_iam_policy_document" "kms_policy" {
 resource "aws_kms_key" "log_key" {
   description = "KMS key for cloudwatch log group"
   policy = data.aws_iam_policy_document.kms_policy.json
+  enable_key_rotation = true
 }
 
 resource "aws_cloudwatch_log_group" "log_group" {
