@@ -26,9 +26,10 @@ jobs:
           pip install pip install pylint pytest pytest-cov selenium playwright
       - name: Run tests with coverage
         run: |
-          pytest tests --cov=src --cov-report=xml --cov-report=term --cov-branch -v
+          pytest --cov=src --cov-report=xml --cov-report=term --cov-branch -v
           cat coverage.xml
           pwd
+          ls /home/runner/work/mgl842-tp2/mgl842-tp2/src
         env:
           PYTHONPATH: ${{ github.workspace }}
       - name: SonarCloud Scan
