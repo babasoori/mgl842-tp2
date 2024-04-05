@@ -22,11 +22,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install pip install pylint pytest pytest-cov pylint
-      - name: Run Pylint
+      - name: Run Pylint show
         continue-on-error: true
-        run: |
-          pylint **/*.py
-          pylint **/*.py --output-format=parseable > pylint-report.txt
+        run: pylint **/*.py
+      - name: Run Pylint report
+        continue-on-error: true
+        run: pylint **/*.py --output-format=parseable > pylint-report.txt
       - name: Run tests with coverage
         run: |
           pytest --cov --cov-report=xml --cov-report=term --cov-branch  --junit-xml=xunit-reports.xml -v
