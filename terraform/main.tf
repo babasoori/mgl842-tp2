@@ -40,9 +40,29 @@ data "aws_iam_policy_document" "lambda_logs" {
   }
 }
 
+data "aws_iam_policy_document" "kms_policy" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"]
+    }
+
+    actions = ["kms:*"]
+    resources = ["*"]
+  }
+}
+
+resource "aws_kms_key" "log_key" {
+  description = "KMS key for cloudwatch log group"
+  policy = data.aws_iam_policy_document.kms_policy.json
+}
+
 resource "aws_cloudwatch_log_group" "log_group" {
   name              = "/aws/lambda/${aws_lambda_function.lambda.function_name}"
   retention_in_days = 14
+  kms_key_id = aws_kms_key.log_key.arn
 }
 
 resource "aws_iam_policy" "lambda_logs_policy" {
