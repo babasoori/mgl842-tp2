@@ -40,15 +40,9 @@ data "aws_iam_policy_document" "lambda_logs" {
   }
 }
 
-resource "aws_kms_key" "log_key" {
-  description = "KMS key for cloudwatch log group"
-  enable_key_rotation = true
-}
-
 resource "aws_cloudwatch_log_group" "log_group" {
   name              = "/aws/lambda/${aws_lambda_function.lambda.function_name}"
   retention_in_days = 14
-  kms_key_id = aws_kms_key.log_key.arn
 }
 
 resource "aws_iam_policy" "lambda_logs_policy" {

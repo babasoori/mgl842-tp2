@@ -1,13 +1,14 @@
 import os
-import pytest
 from unittest.mock import patch, MagicMock
 from src import pr_reviewer
 
+
 @patch('src.pr_reviewer.Github')
 @patch('src.pr_reviewer.OpenAI')
-def test_review_pull_request(mock_openai, mock_github):
+def test_review_pull_request_no_files(mock_openai, mock_github):
     # Set up mock objects
     mock_github.return_value.get_repo.return_value.get_pull.return_value.get_files.return_value = []
+    mock_github.return_value.get_repo.return_value.get_pull.return_value.create_issue_comment.return_value = None
     mock_openai.return_value.beta.threads.create_and_run.return_value.status = 'completed'
     mock_openai.return_value.beta.threads.messages.list.return_value.data = [MagicMock()]
 
@@ -15,23 +16,44 @@ def test_review_pull_request(mock_openai, mock_github):
     result = pr_reviewer.review_pull_request('repo_name', 1)
 
     # Assert that the function behaves as expected
-    assert result is not None
+    assert result is None
+
 
 @patch('src.pr_reviewer.review_pull_request')
-def test_lambda_handler(mock_review_pull_request):
+def test_lambda_handler_unauthorized_repo(mock_review_pull_request):
     # Set up mock objects
     mock_review_pull_request.return_value.body = 'body'
 
     # Call the function with mock objects
     event = {
         "queryStringParameters": {
-            "repo": "repo",
+            "repo": "unauthorized_repo",
             "pr": "1"
         }
     }
-    os.environ['AUTHORIZED_REPO'] = 'repo'
+    os.environ['AUTHORIZED_REPO'] = 'authorized_repo'
     result = pr_reviewer.lambda_handler(event, None)
 
     # Assert that the function behaves as expected
-    assert result['statusCode'] == 200
-    assert result['body'] == 'body'
+    assert result['statusCode'] == 403
+    assert result['body'] == 'You are not unauthorized to use PR Reviewer on this repository !!!'
+
+
+@patch('src.pr_reviewer.review_pull_request')
+def test_lambda_handler_error_occurred(mock_review_pull_request):
+    # Set up mock objects
+    mock_review_pull_request.side_effect = Exception('error')
+
+    # Call the function with mock objects
+    event = {
+        "queryStringParameters": {
+            "repo": "authorized_repo",
+            "pr": "1"
+        }
+    }
+    os.environ['AUTHORIZED_REPO'] = 'authorized_repo'
+    result = pr_reviewer.lambda_handler(event, None)
+
+    # Assert that the function behaves as expected
+    assert result['statusCode'] == 500
+    assert result['body'] == 'Error occurred while processing the request. Please try again later.'

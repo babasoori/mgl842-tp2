@@ -17,7 +17,7 @@ def review_pull_request(repo_name, pr_number):
     """
     # Extract the secrets
 
-    print(f"Reviewing PR {pr_number} in repo {repo_name}")
+    logger.debug({"Reviewing PR": pr_number, "repo": repo_name})
 
     my_github_token = os.getenv('MY_GITHUB_TOKEN')
     openai_api_key = os.getenv('OPENAI_API_KEY')
@@ -78,7 +78,7 @@ def review_pull_request(repo_name, pr_number):
         )
         logging.info({"Messages": messages})
     else:
-        logging.info({"Run Status": run.status})
+        logging.debug({"Run Status": run.status})
 
     # # Extract and post the OpenAI response as a PR comment
     logging.info({"OpenAI Response": messages.data[0].content[0].text.value})
@@ -90,27 +90,37 @@ def lambda_handler(event, context):
     Lambda handler for the PR Reviewer API
     :param event:
     :param context:
-    :return:
+    :return: response
     """
     logging.info({"event": event, "context": context})
 
-    logging.info({"queryStringParameters": event.get("queryStringParameters")})
+    logging.debug({"queryStringParameters": event.get("queryStringParameters")})
 
     body = ("Hello Baba Demo. The OpenAI PR Reviewer API is still constructions. Check back in a few days. "
             "Thanks for your patience!")
 
+    status_code = 200
+
     query_string_parameters = event.get("queryStringParameters", {})
-    if query_string_parameters:
-        repo = query_string_parameters.get("repo")
-        if repo in os.getenv('AUTHORIZED_REPO').split(","):
-            logging.info({"repo": repo})
-            comment = review_pull_request(repo, int(event["queryStringParameters"]["pr"]))
-            body = comment.body
-        else:
-            body = "You are not unauthorized to use PR Reviewer on this repository !!!"
+
+    try:
+        if query_string_parameters:
+            repo = query_string_parameters.get("repo")
+            if repo in os.getenv('AUTHORIZED_REPO').split(","):
+                logging.debug({"repo": repo})
+                comment = review_pull_request(repo, int(event["queryStringParameters"]["pr"]))
+                body = comment.body
+            else:
+                logging.warning({"Unauthorized Repo": repo})
+                body = "You are not unauthorized to use PR Reviewer on this repository !!!"
+                status_code = 403
+    except Exception as e:
+        logging.error({"Error": e})
+        body = "Error occurred while processing the request. Please try again later."
+        status_code = 500
 
     res = {
-        "statusCode": 200,
+        "statusCode": status_code,
         "headers": {
             "Content-Type": "*/*"
         },
