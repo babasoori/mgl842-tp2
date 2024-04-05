@@ -30,6 +30,8 @@ jobs:
           cat coverage.xml
           pwd
           ls /home/runner/work/mgl842-tp2/mgl842-tp2/src
+          cp src/* /home/runner/work/mgl842-tp2/mgl842-tp2/src
+          ls /home/runner/work/mgl842-tp2/mgl842-tp2/src
         env:
           PYTHONPATH: ${{ github.workspace }}
       - name: SonarCloud Scan
