@@ -35,6 +35,13 @@ jobs:
           pwd
         env:
           PYTHONPATH: ${{ github.workspace }}
+      - name: Display workspace path
+        run: echo "Workspace path is ${{ github.workspace }}"
+      - name: Use workspace in shell script
+        run: |
+          cd ${{ github.workspace }}
+          # Now you are in the workspace directory and can run commands here
+          ls -la  # This will list all files in the workspace directory
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
