@@ -25,7 +25,9 @@ jobs:
         run: |
           pip install pytest pytest-cov
       - name: Create coverage reports directory
-        run: mkdir -p coverage-reports
+        run: |
+          mkdir -p coverage-reports
+          ls -la
       - name: Run tests with coverage
         run: |
           pytest tests -v --cov=src --cov-report=xml:coverage-reports/coverage-${{ github.run_number }}.xml
