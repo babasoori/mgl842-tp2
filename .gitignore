@@ -182,4 +182,6 @@ pulumi
 **/terraform.tfstate.backup
 terraform/src
 terraform/lambda_layer
+**/*coverage*
+terraform/.terraformignore
 temp

@@ -102,11 +102,12 @@ def lambda_handler(event, context):
     query_string_parameters = event.get("queryStringParameters", {})
     if query_string_parameters:
         repo = query_string_parameters.get("repo")
-        if repo == os.getenv('AUTHORIZED_REPO'):
+        if repo in os.getenv('AUTHORIZED_REPO').split(","):
+            logging.info({"repo": repo})
             comment = review_pull_request(repo, int(event["queryStringParameters"]["pr"]))
             body = comment.body
         else:
-            body = "Unauthorized repository"
+            body = "You are not unauthorized to use PR Reviewer on this repository !!!"
 
     res = {
         "statusCode": 200,
