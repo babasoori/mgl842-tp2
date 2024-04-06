@@ -139,6 +139,14 @@ def lambda_handler(event, context):
         logging.error({"KeyError": error})
         body = "An unexpected error occurred while processing the request. Please try again later."
         status_code = 500
+    except SyntaxError as error:
+        logging.error({"SyntaxError": error})
+        body = "An unexpected error occurred while processing the request. Please try again later."
+        status_code = 500
+    except ImportError as error:
+        logging.error({"ImportError": error})
+        body = "An unexpected error occurred while processing the request. Please try again later."
+        status_code = 500
 
     res = {
         "statusCode": status_code,
