@@ -34,7 +34,12 @@ jobs:
         env:
           PYTHONPATH: ${{ github.workspace }}
       - name: Override Coverage Source Path for Sonar
-        run: sed -i "s/<source>\/home\/runner\/work\/mgl842-tp2<\/source>/<source>\/github\/workspace<\/source>/g" /home/runner/work/mgl842-tp2/mgl842-tp2/coverage.xml
+        run: |
+          ls -la /home/runner/work/mgl842-tp2/mgl842-tp2
+          ls -la /home/runner/work/mgl842-tp2/
+          ls -la /github/workspace
+          pwd
+          sed -i "s/<source>\/home\/runner\/work\/mgl842-tp2<\/source>/<source>\/github\/workspace<\/source>/g" /home/runner/work/mgl842-tp2/mgl842-tp2/coverage.xml
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
