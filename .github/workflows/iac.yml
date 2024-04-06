@@ -6,7 +6,8 @@ on:
   pull_request:
     types: [ opened, synchronize, reopened ]
 jobs:
-  snyk:
+  snky-iac:
+    name: "Snyk IaC Security Analysis"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

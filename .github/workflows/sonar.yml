@@ -21,14 +21,30 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Test with pytest
-        run: |
-          pip install pip install pylint pytest pytest-cov
+          pip install pip install pylint pytest pytest-cov pylint
+      - name: Run Pylint show
+        continue-on-error: true
+        run: pylint **/*.py
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+      - name: Run Pylint report
+        continue-on-error: true
+        run: pylint **/*.py --output-format=parseable > pylint-report.txt
+        env:
+          PYTHONPATH: ${{ github.workspace }}
       - name: Run tests with coverage
         run: |
           pytest --cov --cov-report=xml --cov-report=term --cov-branch  --junit-xml=xunit-reports.xml -v
         env:
           PYTHONPATH: ${{ github.workspace }}
+      - name: Override Coverage Source Path for Sonar
+        run: |
+          ls -la /home/runner/work/mgl842-tp2/mgl842-tp2
+          ls -la /home/runner/work/mgl842-tp2/
+          pwd
+          cat /home/runner/work/mgl842-tp2/mgl842-tp2/coverage.xml
+          sed -i "s|<source>/home/runner/work/mgl842-tp2/mgl842-tp2</source>|<source>/github/workspace</source>|g" /home/runner/work/mgl842-tp2/mgl842-tp2/coverage.xml
+          cat /home/runner/work/mgl842-tp2/mgl842-tp2/coverage.xml
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
