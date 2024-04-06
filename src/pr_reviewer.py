@@ -19,6 +19,7 @@ import logging
 from github import Github
 from openai import OpenAI
 
+ERROR_MESSAGE = "An unexpected error occurred while processing the request. Please try again later."
 
 logger = logging.getLogger()
 logger.setLevel("INFO")
@@ -137,15 +138,15 @@ def lambda_handler(event, context):
                 status_code = 403
     except KeyError as error:
         logging.error({"KeyError": error})
-        body = "An unexpected error occurred while processing the request. Please try again later."
+        body = ERROR_MESSAGE
         status_code = 500
     except SyntaxError as error:
         logging.error({"SyntaxError": error})
-        body = "An unexpected error occurred while processing the request. Please try again later."
+        body = ERROR_MESSAGE
         status_code = 500
     except ImportError as error:
         logging.error({"ImportError": error})
-        body = "An unexpected error occurred while processing the request. Please try again later."
+        body = ERROR_MESSAGE
         status_code = 500
 
     res = {
