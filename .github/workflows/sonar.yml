@@ -25,9 +25,13 @@ jobs:
       - name: Run Pylint show
         continue-on-error: true
         run: pylint **/*.py
+        env:
+          PYTHONPATH: ${{ github.workspace }}
       - name: Run Pylint report
         continue-on-error: true
         run: pylint **/*.py --output-format=parseable > pylint-report.txt
+        env:
+          PYTHONPATH: ${{ github.workspace }}
       - name: Run tests with coverage
         run: |
           pytest --cov --cov-report=xml --cov-report=term --cov-branch  --junit-xml=xunit-reports.xml -v

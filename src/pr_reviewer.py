@@ -135,8 +135,8 @@ def lambda_handler(event, context):
                 logging.warning({"Unauthorized Repo": repo})
                 body = "You are not unauthorized to use PR Reviewer on this repository !!!"
                 status_code = 403
-    except Exception as error:
-        logging.error({"General Error": error})
+    except KeyError as error:
+        logging.error({"KeyError": error})
         body = "An unexpected error occurred while processing the request. Please try again later."
         status_code = 500
 
