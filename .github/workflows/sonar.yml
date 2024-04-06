@@ -33,6 +33,8 @@ jobs:
           pytest --cov --cov-report=xml --cov-report=term --cov-branch  --junit-xml=xunit-reports.xml -v
         env:
           PYTHONPATH: ${{ github.workspace }}
+      - name: Override Coverage Source Path for Sonar
+        run: sed -i "s/<source>\/home\/runner\/work\/mgl842-tp2<\/source>/<source>\/github\/workspace<\/source>/g" /home/runner/work/mgl842-tp2/mgl842-tp2/coverage.xml
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
