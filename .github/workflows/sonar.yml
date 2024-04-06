@@ -40,7 +40,6 @@ jobs:
           pwd
           cat /home/runner/work/mgl842-tp2/mgl842-tp2/coverage.xml
           sed -i "" "s|<source>/home/runner/work/mgl842-tp2/mgl842-tp2</source>|<source>/github/workspace</source>|g" /home/runner/work/mgl842-tp2/mgl842-tp2/coverage.xml
-          sed -i "s/<source>\/home\/runner\/work\/mgl842-tp2<\/source>/<source>\/github\/workspace<\/source>/g" /home/runner/work/mgl842-tp2/mgl842-tp2/coverage.xml
           cat /home/runner/work/mgl842-tp2/mgl842-tp2/coverage.xml
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
