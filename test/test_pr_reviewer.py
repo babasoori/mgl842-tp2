@@ -4,10 +4,12 @@ This module contains tests for the pr_reviewer module.
 
 import os
 from unittest.mock import patch, MagicMock
-
 import pytest
 
 from src import pr_reviewer
+
+ERROR_MESSAGE = 'An unexpected error occurred while processing the request. Please ' \
+    'try again later.'
 
 
 @patch('src.pr_reviewer.Github')
@@ -59,12 +61,9 @@ def test_lambda_handler_unauthorized_repo(mock_review_pull_request):
 
 
 @pytest.mark.parametrize("error, expected_status_code, expected_body", [
-    (KeyError('error'), 500, 'An unexpected error occurred while processing the request. Please '
-                             'try again later.'),
-    (SyntaxError('error'), 500, 'An unexpected error occurred while processing the request. Please '
-                                'try again later.'),
-    (ImportError('error'), 500, 'An unexpected error occurred while processing the request. Please '
-                                'try again later.')
+    (KeyError('error'), 500, ERROR_MESSAGE),
+    (SyntaxError('error'), 500, ERROR_MESSAGE),
+    (ImportError('error'), 500, ERROR_MESSAGE)
 ])
 @patch('src.pr_reviewer.review_pull_request')
 def test_lambda_handler_error_occurred(mock_review_pull_request, error, expected_status_code,
