@@ -1,3 +1,7 @@
+"""
+This module contains tests for the pr_reviewer module.
+"""
+
 import os
 from unittest.mock import patch, MagicMock
 from src import pr_reviewer
@@ -6,9 +10,16 @@ from src import pr_reviewer
 @patch('src.pr_reviewer.Github')
 @patch('src.pr_reviewer.OpenAI')
 def test_review_pull_request_no_files(mock_openai, mock_github):
+    """
+    Test the review_pull_request function when the PR has no files
+    :param mock_openai:
+    :param mock_github:
+    :return:
+    """
     # Set up mock objects
     mock_github.return_value.get_repo.return_value.get_pull.return_value.get_files.return_value = []
-    mock_github.return_value.get_repo.return_value.get_pull.return_value.create_issue_comment.return_value = None
+    mock_github.return_value.get_repo.return_value.get_pull.return_value.create_issue_comment.\
+        return_value = None
     mock_openai.return_value.beta.threads.create_and_run.return_value.status = 'completed'
     mock_openai.return_value.beta.threads.messages.list.return_value.data = [MagicMock()]
 
@@ -21,6 +32,11 @@ def test_review_pull_request_no_files(mock_openai, mock_github):
 
 @patch('src.pr_reviewer.review_pull_request')
 def test_lambda_handler_unauthorized_repo(mock_review_pull_request):
+    """
+    Test the lambda_handler function when the repo is unauthorized
+    :param mock_review_pull_request:
+    :return:
+    """
     # Set up mock objects
     mock_review_pull_request.return_value.body = 'body'
 
@@ -41,6 +57,11 @@ def test_lambda_handler_unauthorized_repo(mock_review_pull_request):
 
 @patch('src.pr_reviewer.review_pull_request')
 def test_lambda_handler_error_occurred(mock_review_pull_request):
+    """
+    Test the lambda_handler function when an error occurred
+    :param mock_review_pull_request:
+    :return:
+    """
     # Set up mock objects
     mock_review_pull_request.side_effect = Exception('error')
 
