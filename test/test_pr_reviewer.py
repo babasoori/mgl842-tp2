@@ -18,8 +18,7 @@ def test_review_pull_request_no_files(mock_openai, mock_github):
     """
     # Set up mock objects
     mock_github.return_value.get_repo.return_value.get_pull.return_value.get_files.return_value = []
-    mock_github.return_value.get_repo.return_value.get_pull.return_value.create_issue_comment.\
-        return_value = None
+    mock_github.return_value.get_repo.return_value.get_pull.return_value.create_issue_comment.return_value = None
     mock_openai.return_value.beta.threads.create_and_run.return_value.status = 'completed'
     mock_openai.return_value.beta.threads.messages.list.return_value.data = [MagicMock()]
 
@@ -77,4 +76,5 @@ def test_lambda_handler_error_occurred(mock_review_pull_request):
 
     # Assert that the function behaves as expected
     assert result['statusCode'] == 500
-    assert result['body'] == 'Error occurred while processing the request. Please try again later.'
+    assert result['body'] == ('An unexpected error occurred while processing the request. '
+                              'Please try again later.')
