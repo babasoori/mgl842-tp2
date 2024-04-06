@@ -1,6 +1,19 @@
-# MGL842
+# MGL842 - TP2 
 
-## TP2 - Implémentation du processus de qualité
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=babasoori_mgl842-tp2&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=babasoori_mgl842-tp2)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=babasoori_mgl842-tp2&metric=bugs)](https://sonarcloud.io/summary/new_code?id=babasoori_mgl842-tp2)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=babasoori_mgl842-tp2&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=babasoori_mgl842-tp2)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=babasoori_mgl842-tp2&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=babasoori_mgl842-tp2)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=babasoori_mgl842-tp2&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=babasoori_mgl842-tp2)
+
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=babasoori_mgl842-tp2&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=babasoori_mgl842-tp2)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=babasoori_mgl842-tp2&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=babasoori_mgl842-tp2)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=babasoori_mgl842-tp2&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=babasoori_mgl842-tp2)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=babasoori_mgl842-tp2&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=babasoori_mgl842-tp2)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=babasoori_mgl842-tp2&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=babasoori_mgl842-tp2)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=babasoori_mgl842-tp2&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=babasoori_mgl842-tp2)
+
+## Implémentation du processus de qualité
 
 Le TP2 vise à développer et intégrer un processus de gestion de la qualité au sein d'un environnement DevOps, appliqué  
 à un projet de service simple, tel qu'une API REST, GraphQL or gRPC. Cette activité requiert l'implantation et  
