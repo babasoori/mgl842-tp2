@@ -4,6 +4,9 @@ This module contains tests for the pr_reviewer module.
 
 import os
 from unittest.mock import patch, MagicMock
+
+import pytest
+
 from src import pr_reviewer
 
 
@@ -55,15 +58,24 @@ def test_lambda_handler_unauthorized_repo(mock_review_pull_request):
     assert result['body'] == 'You are not unauthorized to use PR Reviewer on this repository !!!'
 
 
+@pytest.mark.parametrize("error, expected_status_code, expected_body", [
+    (KeyError('error'), 500, 'An unexpected error occurred while processing the request. Please '
+                             'try again later.'),
+    (SyntaxError('error'), 500, 'An unexpected error occurred while processing the request. Please '
+                                'try again later.'),
+    (ImportError('error'), 500, 'An unexpected error occurred while processing the request. Please '
+                                'try again later.')
+])
 @patch('src.pr_reviewer.review_pull_request')
-def test_lambda_handler_error_occurred(mock_review_pull_request):
+def test_lambda_handler_error_occurred(mock_review_pull_request, error, expected_status_code,
+                                       expected_body):
     """
     Test the lambda_handler function when an error occurred
     :param mock_review_pull_request:
     :return:
     """
     # Set up mock objects
-    mock_review_pull_request.side_effect = Exception('error')
+    mock_review_pull_request.side_effect = error
 
     # Call the function with mock objects
     event = {
@@ -76,6 +88,5 @@ def test_lambda_handler_error_occurred(mock_review_pull_request):
     result = pr_reviewer.lambda_handler(event, None)
 
     # Assert that the function behaves as expected
-    assert result['statusCode'] == 500
-    assert result['body'] == ('An unexpected error occurred while processing the request. '
-                              'Please try again later.')
+    assert result['statusCode'] == expected_status_code
+    assert result['body'] == expected_body
